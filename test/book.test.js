@@ -77,10 +77,43 @@ describe('Books', () => {
             res.body.book.should.have.property('author');
             res.body.book.should.have.property('pages');
             res.body.book.should.have.property('year');
+            done();
           });
-
-
       })
+  });
+
+  /*
+  * TEST the /GET/:id route
+  */
+  describe('/GET/:id book', () => {
+      it('should GET a book by the given id', (done) => {
+
+          let newBook = {
+            title: "The Lord of the Rings",
+            author: "J.R.R. Tolkien",
+            year: 1954,
+            pages: 1170
+          };
+
+          let book = new Book(newBook);
+          book.save((err, book) => {
+
+              chai.request(server)
+              .get('/book/'+book.id)
+              .send(book)
+              .end((err, res) => {
+                  res.should.have.status(200);
+                  res.body.should.be.a('object');
+                  res.body.should.have.property('title');
+                  res.body.should.have.property('author');
+                  res.body.should.have.property('pages');
+                  res.body.should.have.property('year');
+                  res.body.should.have.property('_id').eql(book.id);
+                  done();
+              });
+
+          });
+      });
   });
 
 });

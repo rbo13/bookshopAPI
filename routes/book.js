@@ -33,6 +33,7 @@ function postBook(req, res){
       res.json({
         success: true,
         status: 200,
+        message: "Book successfully added!",
         data: book
       });
     }
