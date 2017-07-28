@@ -69,7 +69,7 @@ function deleteBook(req, res) {
       status: 204,
       data: result,
       message: "Book successfully removed!"
-    })
+    }).status(204);
   });
 }
 
@@ -88,7 +88,7 @@ function updateBook(req, res) {
               status: 204,
               data: book,
               message: 'Book updated!'
-            });
+            }).status(204);
         });
     });
 }
