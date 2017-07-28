@@ -58,7 +58,7 @@ describe('Books', () => {
             });
       });
 
-      it('should POST a book', () => {
+      it('should POST a book', (done) => {
         let book = {
           title: "The Lord of the Rings",
           author: "J.R.R Tolkien",
@@ -72,11 +72,7 @@ describe('Books', () => {
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
-            res.body.should.have.property("message").eql("Book added");
-            res.body.book.should.have.property('title');
-            res.body.book.should.have.property('author');
-            res.body.book.should.have.property('pages');
-            res.body.book.should.have.property('year');
+            res.body.should.have.property('message').eql('Book successfully added!');
             done();
           });
       })
