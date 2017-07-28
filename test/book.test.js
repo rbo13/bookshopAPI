@@ -112,4 +112,41 @@ describe('Books', () => {
       });
   });
 
+
+  /**
+   * Test the /PUT/:id route
+   */
+   describe('/PUT/:id book', () => {
+      it('should UPDATE a book given the id', (done) => {
+
+          let oldBook = {
+            title: "The Lord of the Rings",
+            author: "J.R.R. Tolkien",
+            year: 1954,
+            pages: 1170
+          };
+
+          let updatedBook = {
+            title: "The Lord of the Rings",
+            author: "J.R.R. Tolkien",
+            year: 1950,
+            pages: 1170
+          };
+
+          let book = new Book(oldBook);
+          book.save((err, book) => {
+              chai.request(server)
+                .put('/book/' + book.id)
+                .send(updatedBook)
+                .end((err, res) => {
+                  res.should.have.status(200);
+                  res.body.should.be.a('object');
+                  res.body.should.have.property("message").eql("Book updated!");
+                  done();
+                })
+          });
+      });
+   });
+
+
 });
