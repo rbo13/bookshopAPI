@@ -76,11 +76,13 @@ function deleteBook(req, res) {
 
 /*
 * PUT /book/:id route to update a single book.
-* TODO:: also update the `updatedAt` field
 */
 function updateBook(req, res) {
   Book.findById({_id: req.params.id}, (err, book) => {
         if(err) res.send(err);
+
+        book.updatedAt = new Date(); // This field also updates the `updatedAt`
+        
         Object.assign(book, req.body).save((err, book) => {
             if(err) res.send(err).status(500);
 
