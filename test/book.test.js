@@ -169,8 +169,6 @@ describe('Books', () => {
                   res.should.have.status(200);
                   res.body.should.be.a('object');
                   res.body.should.have.property('message').eql('Book successfully removed!');
-                  res.body.should.have.property('ok').eql(1);
-                  res.body.should.have.property('n').eql(1);
                   done();
               });
         });
