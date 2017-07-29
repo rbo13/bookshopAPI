@@ -148,5 +148,35 @@ describe('Books', () => {
       });
    });
 
+   /**
+    * TEST the /DELETE/:id route
+    */
+   describe('/DELETE/:id book', () => {
+     it('should DELETE a book given by the id', (done) => {
+
+        let bookToDelete = {
+          title: "The Lord of the Rings",
+          author: "J.R.R. Tolkien",
+          year: 1950,
+          pages: 1170
+        };
+
+        let book = new Book(bookToDelete);
+        book.save((err, book) => {
+            chai.request(server)
+              .delete('/book/' + book.id)
+              .end((err, res) => {
+                  res.should.have.status(200);
+                  res.body.should.be.a('object');
+                  res.body.should.have.property('message').eql('Book successfully removed!');
+                  res.body.should.have.property('ok').eql(1);
+                  res.body.should.have.property('n').eql(1);
+                  done();
+              });
+        });
+
+     })
+   });
+
 
 });
