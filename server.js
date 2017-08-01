@@ -5,7 +5,7 @@ let app = express();
 let mongoose = require('mongoose');
 let morgan = require('morgan');
 let bodyParser = require('body-parser');
-let port = 1340;
+//let port = process.env.PORT || 1340;
 let book = require('./routes/book');
 let config = require('config'); // To load the DB location from JSON file.
 
@@ -25,6 +25,8 @@ if(config.util.getEnv('NODE_ENV') !== 'test') {
   app.use(morgan('combined'));
 }
 
+// SET port
+app.set('port', (process.env.PORT || 1340));
 // Parse application/json and look for raw test
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -50,6 +52,6 @@ app.route('/book/:id')
   .delete(book.deleteBook)
   .put(book.updateBook);
 
-app.listen(port);
-console.log("Listening on port: " + port);
+app.listen(app.get('port'));
+console.log("Listening on port: " + app.get('port'));
 module.exports = app;
